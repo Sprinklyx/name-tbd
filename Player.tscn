@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://uonphen6fh4s"]
+
+[ext_resource type="Script" uid="uid://c40mr4kkdx4gu" path="res://Player.cs" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://d2k6roe045hfi" path="res://Farmer Color 07-07-2025 02-14-04.jpg" id="2_kne1u"]
+[ext_resource type="Texture2D" uid="uid://cyve1705nfdys" path="res://Farmer Normal Map 07-07-2025 02-14-04.jpg" id="3_e80uo"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cxr5p"]
+diffuse_texture = ExtResource("2_kne1u")
+normal_texture = ExtResource("3_e80uo")
+
+[sub_resource type="Gradient" id="Gradient_kne1u"]
+offsets = PackedFloat32Array(0, 0.512987, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.027451, 0.282353, 0.0941176, 1, 0.192157, 0.556863, 0.054902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e80uo"]
+gradient = SubResource("Gradient_kne1u")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0rwas"]
+radius = 18.0
+height = 64.0
+
+[node name="Player" type="Area2D"]
+position = Vector2(79, 171)
+script = ExtResource("1_kpjcp")
+Speed = 200
+metadata/_edit_group_ = true
+
+[node name="Farmer" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_cxr5p")
+
+[node name="PointLight2D" type="PointLight2D" parent="Farmer"]
+position = Vector2(-98, 74)
+rotation = -2.79253
+scale = Vector2(0.935531, 302.347)
+skew = 0.0436332
+color = Color(0.505594, 0.626526, 0.936333, 1)
+energy = 10.0
+shadow_enabled = true
+shadow_color = Color(0, 0, 0.784314, 0)
+texture = SubResource("GradientTexture1D_e80uo")
+
+[node name="FarmerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_0rwas")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
