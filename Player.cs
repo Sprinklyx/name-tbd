@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using static Godot.GD;
 
-public partial class Player : CharacterBody2D
+public partial class Player : Area2D
 {
     
     internal int Health { get; set; } = 10;
@@ -16,11 +16,12 @@ public partial class Player : CharacterBody2D
     private NodePath currentScene;
     [Export]
     public int Speed { get; set; } = 50;
+
     public Vector2 ScreenSize;
 
     [Signal]
     public delegate void HitEventHandler();
-    private void OnBodyEntered(Node2D body)
+    private void OnAreaEntered(Area2D body)
     {
         EmitSignal(SignalName.Hit);
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);

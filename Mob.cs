@@ -20,7 +20,7 @@ public partial class Mob : Area2D
     }
     [Signal]
     public delegate void HitEventHandler();
-    private void OnBodyEntered(Node2D body)
+    private void OnAreaEntered(Area2D body)
     {
         EmitSignal(SignalName.Hit);
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);

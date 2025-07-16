@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://bkk4x1qkjr5dc" path="res://Mob.cs" id="1_r6b5h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6b5h"]
-radius = 17.0
-height = 72.0
+radius = 37.0
+height = 74.0
 
 [node name="Mob" type="Area2D"]
 collision_mask = 0
@@ -20,4 +20,4 @@ flip_h = true
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_r6b5h")
 
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]

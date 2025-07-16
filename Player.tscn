@@ -16,10 +16,10 @@ colors = PackedColorArray(0, 0, 0, 1, 0.027451, 0.282353, 0.0941176, 1, 0.192157
 gradient = SubResource("Gradient_kne1u")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0rwas"]
-radius = 18.0
-height = 64.0
+radius = 40.0
+height = 80.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="Area2D"]
 position = Vector2(79, 171)
 script = ExtResource("1_kpjcp")
 Speed = 200
@@ -43,3 +43,5 @@ texture = SubResource("GradientTexture1D_e80uo")
 [node name="FarmerCollider" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_0rwas")
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]

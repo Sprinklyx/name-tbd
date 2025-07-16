@@ -50,6 +50,7 @@ public partial class Main : Node
     }
     public void OnMobHit()
     {
+        
         var player = GetNode<Player>("Player");
         var mob = GetNode<Mob>("Mob");
 
@@ -67,23 +68,17 @@ public partial class Main : Node
 
     public void OnButtonPressed()
     {
-        Print("button pressed");
-
+        double delta = 0.0167;
         var player = GetNode<Player>("Player");
         var mob = GetNode<Mob>("Mob");
         var target = mob.Position;
 
-        player._PhysicsProcess(0.0167);
-        player.Velocity = player.Position.DirectionTo(target) * player.Speed;
-        for (int i = 0; i < player.Position.DistanceTo(target); i++)
+        player._PhysicsProcess(delta);
+        for (int i = 0; player.Position.DistanceTo(target) > 5; i++)
         {
-            player.MoveAndSlide();
-            
+            player.MoveLocalX((float)delta, true);
+            i++;
         }
-        
-        
-        
-
     }
     
 
