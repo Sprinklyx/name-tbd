@@ -75,10 +75,10 @@ public partial class Main : Node
 
         player._PhysicsProcess(0.0167);
         player.Velocity = player.Position.DirectionTo(target) * player.Speed;
-        for (int i = 0; i < player.Position.DistanceTo(target) + 300; i++)
+        for (int i = 0; i < player.Position.DistanceTo(target); i++)
         {
             player.MoveAndSlide();
-            i++;
+            
         }
         
         
