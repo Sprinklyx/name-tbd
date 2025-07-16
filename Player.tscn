@@ -19,7 +19,7 @@ gradient = SubResource("Gradient_kne1u")
 radius = 18.0
 height = 64.0
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="CharacterBody2D"]
 position = Vector2(79, 171)
 script = ExtResource("1_kpjcp")
 Speed = 200
@@ -43,5 +43,3 @@ texture = SubResource("GradientTexture1D_e80uo")
 [node name="FarmerCollider" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_0rwas")
-
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

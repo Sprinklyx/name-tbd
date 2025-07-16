@@ -7,9 +7,8 @@
 radius = 17.0
 height = 72.0
 
-[node name="Mob" type="RigidBody2D"]
+[node name="Mob" type="Area2D"]
 collision_mask = 0
-gravity_scale = 0.0
 script = ExtResource("1_r6b5h")
 metadata/_edit_group_ = true
 
@@ -20,3 +19,5 @@ flip_h = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_r6b5h")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

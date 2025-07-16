@@ -5,15 +5,17 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using static Godot.GD;
 
-public partial class Player : Area2D
+public partial class Player : CharacterBody2D
 {
-    protected int Health { get; set; } = 10;
-    protected int Armor { get; set; } = 0;
-    protected int Damage { get; set; } = 5;
+    
+    internal int Health { get; set; } = 10;
+    internal int Armor { get; set; } = 0;
+    internal int Damage { get; set; } = 5;
     public int Level { get; set; } = 1;
+    
     private NodePath currentScene;
     [Export]
-    public int Speed { get; set; } = 400;
+    public int Speed { get; set; } = 50;
     public Vector2 ScreenSize;
 
     [Signal]
@@ -23,6 +25,7 @@ public partial class Player : Area2D
         EmitSignal(SignalName.Hit);
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
     }
+    
     public Player()
     {
         Health = 10;
@@ -30,6 +33,9 @@ public partial class Player : Area2D
         Damage = 5;
         Level = 1;
     }
+    [Signal]
+    public delegate void AttackEventHandler();
+   
 
     public override void _Ready()
     {
@@ -37,7 +43,6 @@ public partial class Player : Area2D
         currentScene = GetTree().CurrentScene.SceneFilePath;
         PushError(currentScene);
     }
-
 
     public override void _Process(double delta)
     {
@@ -78,13 +83,11 @@ public partial class Player : Area2D
                 y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
             );
         }
-        else
-        {
-           Vector2 playerPosition = new Vector2(100, 370);
-            this.SetPosition(playerPosition); 
-        }
-
     }
-
-
+    
+    internal void BattleStart(Vector2 position)
+    {
+        Position = position;
+        Show();
+    }
 }

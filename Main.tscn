@@ -19,6 +19,15 @@ one_shot = true
 position = Vector2(100, 370)
 
 [node name="MobStart" type="Marker2D" parent="."]
-position = Vector2(600, 370)
+position = Vector2(800, 370)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 72.0
+offset_top = 447.0
+offset_right = 130.0
+offset_bottom = 478.0
+text = "Attack"
 
 [connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
+[connection signal="Hit" from="Mob" to="." method="OnMobHit"]
+[connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

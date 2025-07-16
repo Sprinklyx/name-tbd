@@ -1,14 +1,34 @@
 using Godot;
 using System;
 
-public partial class Mob : RigidBody2D
+#pragma warning disable CA1050 // Declare types in namespaces
+
+public partial class Mob : Area2D
+#pragma warning restore CA1050 // Declare types in namespaces
+
 {
-    protected int Health { get; set; } = 15;
-    protected int Armor { get; set; } = 2;
-    protected int Damage { get; set; } = 1;
+    internal int Health { get; set; } = 15;
+    internal int Armor { get; set; } = 2;
+    internal int Damage { get; set; } = 1;
     public int Level { get; set; } = 2;
     public Mob()
     {
+        Health = 15;
+        Armor = 2;
+        Damage = 1;
+        Level = 2;
+    }
+    [Signal]
+    public delegate void HitEventHandler();
+    private void OnBodyEntered(Node2D body)
+    {
+        EmitSignal(SignalName.Hit);
+        //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
     }
 
+    internal void Start(Vector2 position)
+    {
+        Position = position;
+        Show();
+    }
 }
