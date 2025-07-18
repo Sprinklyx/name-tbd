@@ -24,7 +24,6 @@ public partial class Mob : Area2D
     {
         
         EmitSignal(SignalName.Hit, "Player");
-        //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
     }
 
     internal void Start(Vector2 position)

@@ -1,26 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4eohf28ggw3e"]
 
+[ext_resource type="Script" uid="uid://dbyrj3iicb7o3" path="res://Dungeon.cs" id="1_gaxvh"]
 [ext_resource type="PackedScene" uid="uid://uonphen6fh4s" path="res://Player.tscn" id="2_r0du0"]
 [ext_resource type="PackedScene" uid="uid://lsedfy2lihfn" path="res://Mob.tscn" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://d31stnqt7pkyh" path="res://BattleScene.tscn" id="4_gaxvh"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_sqx0g"]
-script/source = "using Godot;
-using System;
-
-public partial class Dungeon : Node
-{
-}
-"
-
 [node name="Dungeon" type="Node"]
-script = SubResource("CSharpScript_sqx0g")
+script = ExtResource("1_gaxvh")
 
 [node name="Player" parent="." instance=ExtResource("2_r0du0")]
-
-[node name="BattleScene" parent="." instance=ExtResource("4_gaxvh")]
-light_mask = 0
-visibility_layer = 0
 
 [node name="Mob" parent="." instance=ExtResource("3_cm0pq")]
 
@@ -30,5 +18,13 @@ position = Vector2(100, 370)
 [node name="MobStart" type="Marker2D" parent="."]
 position = Vector2(600, 370)
 
+[node name="BattleScene" parent="." instance=ExtResource("4_gaxvh")]
+offset_top = -0.360016
+offset_bottom = 0.359985
+
+[node name="UIMarker" type="Marker2D" parent="."]
+position = Vector2(15, 450)
+
 [connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
 [connection signal="Hit" from="Mob" to="." method="OnMobHit"]
+[connection signal="Attack" from="BattleScene" to="Player" method="AttackDamage"]

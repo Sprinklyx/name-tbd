@@ -23,9 +23,16 @@ public partial class Player : CharacterBody2D
     public delegate void HitEventHandler();
     protected void OnAreaEntered(Area2D body)
     {
-        EmitSignal(SignalName.Hit);
+        EmitSignal(SignalName.Hit, "Mob");
 
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
+    }
+
+    public void AttackDamage()
+    {
+        //player attack logic
+        Vector2 target = GetNode<Mob>("../Mob").Position;
+        MoveAndCollide(target);
     }
     
     public Player()
@@ -35,14 +42,8 @@ public partial class Player : CharacterBody2D
         Damage = 5;
         Level = 1;
     }
-    [Signal]
-    public delegate void AttackEventHandler();
-    protected void OnButtonPressed()
-    {
-        EmitSignal(SignalName.Attack);
-        Vector2 target = GetNode<Mob>("Mob").Position;
-        MoveAndCollide(target);
-    }
+    
+    
 
     
     public override void _Ready()

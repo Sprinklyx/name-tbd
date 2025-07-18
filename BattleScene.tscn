@@ -2,47 +2,42 @@
 
 [ext_resource type="Script" uid="uid://b2bo2qjlomytp" path="res://BattleScene.cs" id="1_ttbo7"]
 
-[node name="BattleScene" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="BattleScene" type="GridContainer"]
+layout_direction = 2
+anchors_preset = -1
+anchor_left = 0.008
+anchor_top = 0.417
+anchor_right = 0.123
+anchor_bottom = 0.483
+offset_left = -0.360001
+offset_top = -70.36
+offset_right = 0.839996
+offset_bottom = -69.64
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
 script = ExtResource("1_ttbo7")
 
 [node name="Attack" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
 text = "Attack"
 
-[node name="AttackMarker" type="Marker2D" parent="Attack"]
-position = Vector2(68, 450)
-
 [node name="AbilityOne" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 2
 text = "Ability One"
 
-[node name="AbOneMarker" type="Marker2D" parent="AbilityOne"]
-position = Vector2(132, 450)
-
 [node name="AbilityTwo" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 text = "Ability Two"
 
-[node name="AbTwoMarker" type="Marker2D" parent="AbilityTwo"]
-position = Vector2(68, 530)
-
 [node name="AbilityThree" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 text = "Ability Three"
 
-[node name="AbThreeMarker" type="Marker2D" parent="AbilityThree"]
-position = Vector2(132, 530)
+[connection signal="pressed" from="Attack" to="." method="PlayerAttack"]

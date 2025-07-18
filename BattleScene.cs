@@ -1,19 +1,21 @@
 using Godot;
 using System;
 
-public partial class BattleScene : Control
+public partial class BattleScene : GridContainer
 {
-    public override void _Ready()
+    internal void BattleUI(Vector2 position)
     {
-        Markers();
+        Position = position;
+        Show();
     }
 
-    protected void Markers()
+    //add signal handler
+    [Signal]
+    public delegate void AttackEventHandler();
+    protected void PlayerAttack()
     {
-        var attackButton = GetNode<Marker2D>("AttackMarker");
-        var AbOneButton = GetNode<Marker2D>("AbOneMarker");
-        var AbTwoButton = GetNode<Marker2D>("AbTwoMarker");
-        var AbThreeButton = GetNode<Marker2D>("AbThreeMarker");
+        //send signal out
+        EmitSignal(SignalName.Attack);
     }
 
 }
