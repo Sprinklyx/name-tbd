@@ -20,14 +20,9 @@ public partial class Mob : Area2D
     }
 
     
-
-    [Signal]
-    public delegate void DamagedPlayerEventHandler();
+    
     private void OnAreaEntered(Area2D body)
     {
-        //signal sent out        
-        EmitSignal(SignalName.DamagedPlayer, "Player");
-
         //attacks player
         DealingDamage();
     }
@@ -46,14 +41,21 @@ public partial class Mob : Area2D
         else
         {
             //player loses health
-            player.Health -= Damage;
-            PushError("Player health = " + player.OnMobDamagedPlayer());
+            player.Health -= DamageDealt;
+            PushError("Player health = " + player.Health);
         }
 
         return DamageDealt;
     }
 
-    
+    //remove enemy sprite
+    public void HealthDepleted()
+    {
+        if (Health == 0)
+        {
+            QueueFree();
+        }
+    }
 
 
     //set enemy start position

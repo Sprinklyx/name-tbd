@@ -29,6 +29,4 @@ position = Vector2(15, 450)
 process_callback = 0
 wait_time = 3.0
 
-[connection signal="DamagedEnemy" from="Player" to="Mob" method="OnPlayerDamagedEnemy"]
-[connection signal="DamagedPlayer" from="Mob" to="Player" method="OnMobDamagedPlayer"]
 [connection signal="Attack" from="BattleScene" to="Player" method="AttackDamage"]

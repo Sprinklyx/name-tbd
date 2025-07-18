@@ -8,6 +8,7 @@ using static Godot.GD;
 public partial class Player : CharacterBody2D
 {
     
+    internal int startingHealth;
     internal int Health { get; set; } = 10;
     internal int Armor { get; set; } = 0;
     internal int Damage { get; set; } = 5;
@@ -27,6 +28,7 @@ public partial class Player : CharacterBody2D
         Position = position;
         Show();
     }
+    
     
     //player attack
     public void AttackDamage()
@@ -52,8 +54,8 @@ public partial class Player : CharacterBody2D
         }
         else
         {
-
-            enemy.Health -= Damage;
+            //enemy health lost
+            enemy.Health -= DamageDealt;            
             PushError("Enemy health = " + enemy.Health);
             
 
@@ -66,18 +68,20 @@ public partial class Player : CharacterBody2D
         Position = start_position;
     }
 
-    //player health lost 
-    public int OnMobDamagedPlayer()
+    //return to town
+    public void HealthDepleted()
     {
-        Player player = GetNode<Player>("../Player");
-        player.Health -= DealingDamage();
-        return player.Health;
+        if (Health == 0)
+        {
+            currentScene = "res://Town.tscn";
+            Load(currentScene);
+        }
     }
-    
+
     
     public Player()
     {
-        Health = 10;
+        startingHealth = Health;;
         Armor = 0;
         Damage = 5;
         Level = 1;
