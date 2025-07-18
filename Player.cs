@@ -12,28 +12,68 @@ public partial class Player : CharacterBody2D
     internal int Armor { get; set; } = 0;
     internal int Damage { get; set; } = 5;
     public int Level { get; set; } = 1;
+    internal int DamageDealt;
     
     private NodePath currentScene;
     [Export]
     public int Speed { get; set; } = 50;
+    private Vector2 start_position = new(100, 370);
 
     public Vector2 ScreenSize;
 
-    [Signal]
-    public delegate void HitEventHandler();
-    protected void OnAreaEntered(Area2D body)
+    //set player start position
+    internal void BattleStart(Vector2 position)
     {
-        EmitSignal(SignalName.Hit, "Mob");
-
-        //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
+        Position = position;
+        Show();
     }
-
+    
+    //player attack
     public void AttackDamage()
     {
+        Mob enemy = GetNode<Mob>("../Mob");
         //player attack logic
-        Vector2 target = GetNode<Mob>("../Mob").Position;
+        Vector2 target = enemy.Position;
         MoveAndCollide(target);
+        PushError("Hit!");
+        PushError(DealingDamage());
+
+        ResetPosition();
+
     }
+    //damage dealt to enemy is recorded
+    public int DealingDamage()
+    {
+        Mob enemy = GetNode<Mob>("../Mob");
+        DamageDealt = Damage - enemy.Armor;
+        if (DamageDealt <= 0)
+        {
+            PushError("Miss");
+        }
+        else
+        {
+
+            enemy.Health -= Damage;
+            PushError("Enemy health = " + enemy.Health);
+            
+
+        }
+        return DamageDealt;
+    }
+    //return player to pre-attack position
+    protected void ResetPosition()
+    {
+        Position = start_position;
+    }
+
+    //player health lost 
+    public int OnMobDamagedPlayer()
+    {
+        Player player = GetNode<Player>("../Player");
+        player.Health -= DealingDamage();
+        return player.Health;
+    }
+    
     
     public Player()
     {
@@ -95,9 +135,4 @@ public partial class Player : CharacterBody2D
         
     }
     
-    internal void BattleStart(Vector2 position)
-    {
-        Position = position;
-        Show();
-    }
 }

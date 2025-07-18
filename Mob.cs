@@ -1,16 +1,16 @@
 using Godot;
 using System;
+using static Godot.GD;
 
-#pragma warning disable CA1050 // Declare types in namespaces
 
 public partial class Mob : Area2D
-#pragma warning restore CA1050 // Declare types in namespaces
 
 {
     internal int Health { get; set; } = 15;
     internal int Armor { get; set; } = 2;
     internal int Damage { get; set; } = 1;
     public int Level { get; set; } = 2;
+    internal int DamageDealt;
     public Mob()
     {
         Health = 15;
@@ -18,14 +18,45 @@ public partial class Mob : Area2D
         Damage = 1;
         Level = 2;
     }
+
+    
+
     [Signal]
-    public delegate void HitEventHandler();
+    public delegate void DamagedPlayerEventHandler();
     private void OnAreaEntered(Area2D body)
     {
-        
-        EmitSignal(SignalName.Hit, "Player");
+        //signal sent out        
+        EmitSignal(SignalName.DamagedPlayer, "Player");
+
+        //attacks player
+        DealingDamage();
     }
 
+    //enemy attack damage
+    public int DealingDamage()
+    {
+        Player player = GetNode<Player>("../Player");
+
+        DamageDealt = Damage - player.Armor;
+       
+        if (DamageDealt <= 0)
+        {
+            PushError("Miss");
+        }
+        else
+        {
+            //player loses health
+            player.Health -= Damage;
+            PushError("Player health = " + player.OnMobDamagedPlayer());
+        }
+
+        return DamageDealt;
+    }
+
+    
+
+
+    //set enemy start position
     internal void Start(Vector2 position)
     {
         Position = position;
