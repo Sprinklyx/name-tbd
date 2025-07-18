@@ -67,6 +67,5 @@ public partial class Dungeon : Node
                 Print(mob.Health);
             }
         }
-    }   
+    }
 }
-    

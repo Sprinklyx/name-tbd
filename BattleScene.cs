@@ -3,7 +3,7 @@ using System;
 
 public partial class BattleScene : Control
 {
-    public void _Ready()
+    public override void _Ready()
     {
         Markers();
     }

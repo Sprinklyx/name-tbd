@@ -40,14 +40,11 @@ public partial class Player : CharacterBody2D
     protected void OnButtonPressed()
     {
         EmitSignal(SignalName.Attack);
-        PhysicsProcess(0.0167);
-    }
-
-    private void PhysicsProcess(double delta)
-    {
         Vector2 target = GetNode<Mob>("Mob").Position;
         MoveAndCollide(target);
     }
+
+    
     public override void _Ready()
     {
         ScreenSize = GetViewportRect().Size;
