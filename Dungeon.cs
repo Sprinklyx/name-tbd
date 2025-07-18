@@ -2,7 +2,7 @@ using Godot;
 using System;
 using static Godot.GD;
 
-public partial class Main : Node
+public partial class Dungeon : Node
 {
     internal int PlayerDamageTaken;
     internal int MobDamageTaken;
@@ -54,33 +54,19 @@ public partial class Main : Node
         var player = GetNode<Player>("Player");
         var mob = GetNode<Mob>("Mob");
 
-        MobDamageTaken -= player.Damage - mob.Armor;
-        if (MobDamageTaken < 0)
+        if (mob.OverlapsArea(player) == true)
         {
-            Console.WriteLine("Miss");
+            MobDamageTaken -= player.Damage - mob.Armor;
+            if (MobDamageTaken < 0)
+            {
+                Console.WriteLine("Miss");
+            }
+            else
+            {
+                mob.Health -= MobDamageTaken;
+                Print(mob.Health);
+            }
         }
-        else
-        {
-            mob.Health -= MobDamageTaken;
-            Print(mob.Health);
-        }
-    }
-
-    public void OnButtonPressed()
-    {
-        double delta = 0.0167;
-        var player = GetNode<Player>("Player");
-        var mob = GetNode<Mob>("Mob");
-        var target = mob.Position;
-
-        player._PhysicsProcess(delta);
-        for (int i = 0; player.Position.DistanceTo(target) > 5; i++)
-        {
-            player.MoveLocalX((float)delta, true);
-            i++;
-        }
-    }
-    
-
+    }   
 }
     

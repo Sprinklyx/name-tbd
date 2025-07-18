@@ -8,7 +8,9 @@ radius = 37.0
 height = 74.0
 
 [node name="Mob" type="Area2D"]
-collision_mask = 0
+collision_layer = 4
+collision_mask = 2
+input_pickable = false
 script = ExtResource("1_r6b5h")
 metadata/_edit_group_ = true
 

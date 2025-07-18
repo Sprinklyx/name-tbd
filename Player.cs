@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using static Godot.GD;
 
-public partial class Player : Area2D
+public partial class Player : CharacterBody2D
 {
     
     internal int Health { get; set; } = 10;
@@ -21,9 +21,10 @@ public partial class Player : Area2D
 
     [Signal]
     public delegate void HitEventHandler();
-    private void OnAreaEntered(Area2D body)
+    protected void OnAreaEntered(Area2D body)
     {
         EmitSignal(SignalName.Hit);
+
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
     }
     
@@ -36,8 +37,17 @@ public partial class Player : Area2D
     }
     [Signal]
     public delegate void AttackEventHandler();
-   
+    protected void OnButtonPressed()
+    {
+        EmitSignal(SignalName.Attack);
+        PhysicsProcess(0.0167);
+    }
 
+    private void PhysicsProcess(double delta)
+    {
+        Vector2 target = GetNode<Mob>("Mob").Position;
+        MoveAndCollide(target);
+    }
     public override void _Ready()
     {
         ScreenSize = GetViewportRect().Size;
@@ -84,6 +94,7 @@ public partial class Player : Area2D
                 y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
             );
         }
+        
     }
     
     internal void BattleStart(Vector2 position)

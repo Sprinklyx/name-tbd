@@ -22,7 +22,8 @@ public partial class Mob : Area2D
     public delegate void HitEventHandler();
     private void OnAreaEntered(Area2D body)
     {
-        EmitSignal(SignalName.Hit);
+        
+        EmitSignal(SignalName.Hit, "Player");
         //GetNode<CollisionShape2D>("FarmerCollider").SetDeferred(CollisionShape2D.PropertyName.Transform, true);
     }
 
