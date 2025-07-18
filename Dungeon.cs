@@ -12,6 +12,27 @@ public partial class Dungeon : Node
         EnterBattle();
         
     }
+    public void OnMobAttackPlayer()
+    {
+        Mob enemy = GetNode<Mob>("Mob");
+        Player player = GetNode<Player>("Player");
+        //set mob's attack pattern
+        PathFollow2D mobAttackPath = GetNode<PathFollow2D>("../MobPath/MobPathFollow");
+
+        enemy.Position.MoveToward(player.Position, (float)0.0167);
+        
+    }
+
+    //logic for after player turn
+    public void OnPlayerTurnOver()
+    {
+        Timer mobAttack = GetNode<Timer>("MobAttack");
+        mobAttack.Start();
+        if (mobAttack.IsStopped())
+        {
+            OnMobAttackPlayer();
+        }
+    }
 
 
 
@@ -36,44 +57,5 @@ public partial class Dungeon : Node
         //adding visible ui location
         var ButtonStart = GetNode<Marker2D>("UIMarker");
         playerButtons.BattleUI(ButtonStart.Position);
-    }
-
-
-    public void OnPlayerHit()
-    {
-        var player = GetNode<Player>("Player");
-        var mob = GetNode<Mob>("Mob");
-        PushError(player.Health);
-        PlayerDamageTaken -= mob.Damage - player.Armor;
-        if (PlayerDamageTaken < 0)
-        {
-            Console.WriteLine("Miss");
-        }
-        else
-        {
-            player.Health -= PlayerDamageTaken;
-            Print(player.Health);
-
-        }
-    }
-    public void OnMobHit()
-    {
-        
-        var player = GetNode<Player>("Player");
-        var mob = GetNode<Mob>("Mob");
-
-        if (mob.OverlapsArea(player) == true)
-        {
-            MobDamageTaken -= player.Damage - mob.Armor;
-            if (MobDamageTaken < 0)
-            {
-                Console.WriteLine("Miss");
-            }
-            else
-            {
-                mob.Health -= MobDamageTaken;
-                Print(mob.Health);
-            }
-        }
     }
 }

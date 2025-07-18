@@ -19,6 +19,13 @@ public partial class Mob : Area2D
         Level = 2;
     }
 
+
+    public void Attack()
+    {
+        Player player = GetNode<Player>("../Player");
+        Position.MoveToward(player.Position, (float)0.0167);
+        
+    }
     
     
     private void OnAreaEntered(Area2D body)
@@ -27,13 +34,20 @@ public partial class Mob : Area2D
         DealingDamage();
     }
 
-    //enemy attack damage
+    //enemy attack handler
+    [Signal]
+    private delegate void AttackPlayerEventHandler();
+
+     //enemy attack damage
     public int DealingDamage()
     {
+        EmitSignal(SignalName.AttackPlayer, "Player");
+
         Player player = GetNode<Player>("../Player");
 
+        
         DamageDealt = Damage - player.Armor;
-       
+
         if (DamageDealt <= 0)
         {
             PushError("Miss");

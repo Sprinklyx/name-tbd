@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4eohf28ggw3e"]
+[gd_scene load_steps=6 format=3 uid="uid://d4eohf28ggw3e"]
 
 [ext_resource type="Script" uid="uid://dbyrj3iicb7o3" path="res://Dungeon.cs" id="1_gaxvh"]
 [ext_resource type="PackedScene" uid="uid://uonphen6fh4s" path="res://Player.tscn" id="2_r0du0"]
 [ext_resource type="PackedScene" uid="uid://lsedfy2lihfn" path="res://Mob.tscn" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://d31stnqt7pkyh" path="res://BattleScene.tscn" id="4_gaxvh"]
+
+[sub_resource type="Curve2D" id="Curve2D_gaxvh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 597, 365, 0, 0, 0, 0, 370, 177, 0, 0, 0, 0, 101, 373, 0, 0, 0, 0, 597, 365)
+}
+point_count = 4
 
 [node name="Dungeon" type="Node"]
 script = ExtResource("1_gaxvh")
@@ -25,8 +31,18 @@ offset_bottom = 0.359985
 [node name="UIMarker" type="Marker2D" parent="."]
 position = Vector2(15, 450)
 
-[node name="PlayerReturn" type="Timer" parent="."]
+[node name="MobAttack" type="Timer" parent="."]
 process_callback = 0
 wait_time = 3.0
 
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_gaxvh")
+
+[node name="MobPathFollow" type="PathFollow2D" parent="MobPath"]
+position = Vector2(597, 365)
+rotation = -2.4499
+loop = false
+
+[connection signal="TurnOver" from="Player" to="." method="OnPlayerTurnOver"]
+[connection signal="AttackPlayer" from="Mob" to="." method="OnMobAttackPlayer"]
 [connection signal="Attack" from="BattleScene" to="Player" method="AttackDamage"]

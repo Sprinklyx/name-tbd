@@ -28,8 +28,10 @@ public partial class Player : CharacterBody2D
         Position = position;
         Show();
     }
-    
-    
+    //start logic for enemy turn
+    [Signal]
+    public delegate void TurnOverEventHandler();
+
     //player attack
     public void AttackDamage()
     {
@@ -41,6 +43,7 @@ public partial class Player : CharacterBody2D
         PushError(DealingDamage());
 
         ResetPosition();
+        EmitSignal(SignalName.TurnOver);
 
     }
     //damage dealt to enemy is recorded
